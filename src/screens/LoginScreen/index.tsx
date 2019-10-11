@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { View, Image } from 'react-native';
 import { Formik } from 'formik';
+import { NavigationStackProp } from 'react-navigation-stack';
 
 import LabeledInput from '@components/LabeledInput';
 import RoundButton from '@components/RoundButton';
@@ -10,12 +11,14 @@ import styles from './style';
 import schema from './validation';
 import COLORS from '@assets/colors';
 import { errorPrinter } from '@utils/validationErrors';
+import { setToken, getToken } from '@services/authService';
 
 interface ILoginScreenProps {
     login: (values: any) => Promise<any>;
+    navigation: NavigationStackProp;
 }
 
-export default ({ login }: ILoginScreenProps) => {
+export default ({ login, navigation }: ILoginScreenProps) => {
     const {
         container,
         registerButton,
@@ -34,17 +37,18 @@ export default ({ login }: ILoginScreenProps) => {
                     password: '',
                 }}
                 validationSchema={schema}
-                onSubmit={async (values, { setSubmitting }) => {
+                onSubmit={async values => {
                     try {
-                        const res = await login(values);
+                        const { data } = await login(values);
+                        await setToken('access_token', data.login.access_token);
+                        await setToken('refresh_token', data.login.refresh_token);
+                        await navigation.navigate('Main');
                     } catch (e) {
                         notification.openNotification([
                             'Lütfen bilgilerinizi kontrol ediniz',
                             'Hemen ediyorum',
                             'coffee',
                         ]);
-                    } finally {
-                        setSubmitting(false);
                     }
                 }}>
                 {({ handleSubmit, handleChange, handleBlur, values }) => (
@@ -99,7 +103,9 @@ export default ({ login }: ILoginScreenProps) => {
                 label="Kayıt Ol"
                 textStyle={registerButtonText}
                 viewStyle={registerButton}
-                onPress={() => console.log('asd')}
+                onPress={() =>
+                    console.log('This button will navigate to register screen in future')
+                }
             />
         </View>
     );

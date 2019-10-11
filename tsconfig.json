@@ -8,7 +8,8 @@
             "@screens/*": ["screens/*"],
             "@config/*": ["config/*"],
             "@utils/*": ["utils/*"],
-            "@assets/*": ["assets/*"]
+            "@assets/*": ["assets/*"],
+            "@types/*": ["types/*"]
         },
         "allowJs": true,
         "allowSyntheticDefaultImports": true,

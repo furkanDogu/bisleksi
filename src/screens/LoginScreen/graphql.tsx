@@ -1,17 +1,35 @@
 import React from 'react';
 import { useMutation } from '@apollo/react-hooks';
+import { NavigationStackProp } from 'react-navigation-stack';
 import gql from 'graphql-tag';
 
 import LoginScreen from '.';
 
 const MUTATION_LOGIN = gql`
     mutation Login($email: String!, $password: String!) {
-        login(email: $email, password: $password)
+        login(email: $email, password: $password) {
+            access_token
+            refresh_token
+        }
     }
 `;
 
-export default () => {
+interface ILoginScreenGQLProps {
+    navigation: NavigationStackProp;
+}
+
+const LoginScreenGQL = ({ navigation }: ILoginScreenGQLProps) => {
     const [login, { error, data, loading }] = useMutation(MUTATION_LOGIN);
 
-    return <LoginScreen login={values => login({ variables: values })}></LoginScreen>;
+    return (
+        <LoginScreen
+            navigation={navigation}
+            login={values => login({ variables: values })}></LoginScreen>
+    );
 };
+
+LoginScreenGQL.navigationOptions = {
+    header: null,
+};
+
+export default LoginScreenGQL;
