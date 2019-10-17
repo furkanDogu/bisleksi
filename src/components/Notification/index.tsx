@@ -1,5 +1,6 @@
 import React from 'react';
-import { Modal, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
+import Modal from 'react-native-modal';
 import Emoji from 'react-native-emoji';
 
 import RoundButton from '@components/RoundButton';
@@ -14,7 +15,7 @@ export const NotificationContext = React.createContext({
 const NotificationProvider: React.FC = ({ children }) => {
     const [isOpen, setIsOpen] = React.useState(false);
     const [msg, setMsg] = React.useState(['', '', 'coffee']);
-
+    // msg content: [msg, buttonText, emojiText]
     function openNotification(msg: string[]) {
         setMsg(msg);
         setIsOpen(true);
@@ -29,10 +30,10 @@ const NotificationProvider: React.FC = ({ children }) => {
             <View style={styles.flexOne}>
                 {children}
                 <Modal
-                    animationType="slide"
-                    transparent={true}
-                    visible={isOpen}
-                    onRequestClose={() => setIsOpen(false)}>
+                    isVisible={isOpen}
+                    onBackButtonPress={() => setIsOpen(false)}
+                    onSwipeComplete={() => setIsOpen(false)}
+                    swipeDirection={['down']}>
                     <View style={[styles.flexOne, styles.container]}>
                         <View style={styles.innerContainer}>
                             <Emoji name={msg[2]} style={styles.emoji} />

@@ -21,7 +21,8 @@
                     "@services": "./src/services",
                     "@screens": "./src/screens",
                     "@utils": "./src/utils",
-                    "@assets": "./src/assets"
+                    "@assets": "./src/assets",
+                    "@types": "./src/types"
                 }
             }
         ]
