@@ -17,7 +17,7 @@ type TRoundButtonProps = {
     bgColor: string;
     label: string;
     onPress?: () => any;
-    viewStyle?: RegisteredStyle<ViewStyle>;
+    viewStyle?: RegisteredStyle<ViewStyle>[] | RegisteredStyle<ViewStyle>;
     textStyle?: RegisteredStyle<TextStyle>;
     buttonProps?: {
         [key in keyof TouchableOpacityProps]: any;

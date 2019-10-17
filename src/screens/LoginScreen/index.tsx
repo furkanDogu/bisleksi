@@ -1,8 +1,9 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { View, Image } from 'react-native';
 import { Formik } from 'formik';
 import { NavigationStackProp } from 'react-navigation-stack';
 
+import RegisterScreenGQL from '@screens/LoginScreen/RegisterScreen/graphql';
 import LabeledInput from '@components/LabeledInput';
 import RoundButton from '@components/RoundButton';
 import { NotificationContext } from '@components/Notification';
@@ -11,7 +12,8 @@ import styles from './style';
 import schema from './validation';
 import COLORS from '@assets/colors';
 import { errorPrinter } from '@utils/validationErrors';
-import { setToken, getToken } from '@services/authService';
+import netInfo from '@utils/netInfo';
+import { setToken } from '@services/authService';
 
 interface ILoginScreenProps {
     login: (values: any) => Promise<any>;
@@ -19,6 +21,7 @@ interface ILoginScreenProps {
 }
 
 export default ({ login, navigation }: ILoginScreenProps) => {
+    const [isRegisterVisible, setRegisterVisible] = useState(false);
     const {
         container,
         registerButton,
@@ -26,8 +29,12 @@ export default ({ login, navigation }: ILoginScreenProps) => {
         imageContainer,
         registerButtonText,
         loginButtonText,
+        buttonOn,
+        buttonOff,
     } = styles;
     const notification = useContext(NotificationContext);
+
+    const registerButtonOpacity = () => (isRegisterVisible ? buttonOff : buttonOn);
 
     return (
         <View style={{ flex: 1 }}>
@@ -39,10 +46,19 @@ export default ({ login, navigation }: ILoginScreenProps) => {
                 validationSchema={schema}
                 onSubmit={async values => {
                     try {
-                        const { data } = await login(values);
-                        await setToken('access_token', data.login.access_token);
-                        await setToken('refresh_token', data.login.refresh_token);
-                        await navigation.navigate('Main');
+                        const isNetAvailable = await netInfo();
+                        if (isNetAvailable) {
+                            const { data } = await login(values);
+                            await setToken('access_token', data.login.access_token);
+                            await setToken('refresh_token', data.login.refresh_token);
+                            await navigation.navigate('Tab');
+                        } else {
+                            notification.openNotification([
+                                'Lütfen internet bağlantınızı kontrol ediniz',
+                                'Hemen ediyorum',
+                                'coffee',
+                            ]);
+                        }
                     } catch (e) {
                         notification.openNotification([
                             'Lütfen bilgilerinizi kontrol ediniz',
@@ -60,18 +76,17 @@ export default ({ login, navigation }: ILoginScreenProps) => {
                         </View>
                         <LabeledInput
                             bgColor={COLORS.PINK}
-                            width="65%"
                             text="E-posta "
                             textColor="white"
                             height={60}
                             inputProps={{
                                 onChangeText: handleChange('email'),
                                 onBlur: handleBlur('email'),
+                                maxLength: 255,
                             }}
                         />
                         <LabeledInput
                             bgColor={COLORS.TURQUOISE}
-                            width="65%"
                             text="Şifre "
                             textColor="white"
                             height={60}
@@ -79,9 +94,10 @@ export default ({ login, navigation }: ILoginScreenProps) => {
                                 secureTextEntry: true,
                                 onChangeText: handleChange('password'),
                                 onBlur: handleBlur('password'),
+                                maxLength: 20,
                             }}
                         />
-                        <View style={{ marginBottom: 30 }}></View>
+
                         <RoundButton
                             bgColor={COLORS.ORANGE}
                             label="Giriş Yap"
@@ -102,10 +118,15 @@ export default ({ login, navigation }: ILoginScreenProps) => {
                 bgColor={COLORS.ORANGE}
                 label="Kayıt Ol"
                 textStyle={registerButtonText}
-                viewStyle={registerButton}
-                onPress={() =>
-                    console.log('This button will navigate to register screen in future')
-                }
+                viewStyle={[registerButton, registerButtonOpacity()]}
+                onPress={() => setRegisterVisible(true)}
+            />
+            <RegisterScreenGQL
+                navigation={navigation}
+                isVisible={isRegisterVisible}
+                toggleVisible={() => {
+                    setRegisterVisible(!isRegisterVisible);
+                }}
             />
         </View>
     );

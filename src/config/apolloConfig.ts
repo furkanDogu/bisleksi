@@ -37,43 +37,43 @@ const headerSettingLink = new ApolloLink(
         }),
 );
 
-const refreshTokenLink = (() =>
-    onError(({ forward, graphQLErrors, networkError, operation }) => {
-        if (graphQLErrors && graphQLErrors.some(err => err.message === 'Auth error')) {
-            return new Observable(observer => {
-                getToken('refresh_token')
-                    .then(refresh_token => {
-                        fetch(env.NEW_ACCESS_TOKEN_URL, {
-                            method: 'GET',
-                            credentials: 'include',
-                            headers: {
-                                refresh_token: refresh_token as string,
-                            },
-                        })
-                            .then(res => res.json())
-                            .then(res => {
-                                setToken('access_token', res.access_token).then(() => {
-                                    console.log('access_token refetched because it was invalid');
-                                    operation.setContext(({ headers = {} }: any) => ({
-                                        headers: {
-                                            ...headers,
-                                            access_token: res.access_token,
-                                        },
-                                    }));
-                                    const subscriber = {
-                                        next: observer.next.bind(observer),
-                                        error: observer.error.bind(observer),
-                                        complete: observer.complete.bind(observer),
-                                    };
-                                    forward(operation).subscribe(subscriber);
-                                });
-                            })
-                            .catch(e => observer.error(e));
+const refreshTokenLink = onError(({ forward, graphQLErrors, networkError, operation }) => {
+    console.log(graphQLErrors);
+    if (graphQLErrors && graphQLErrors.some(err => err.message === 'Auth error')) {
+        return new Observable(observer => {
+            getToken('refresh_token')
+                .then(refresh_token => {
+                    fetch(env.NEW_ACCESS_TOKEN_URL, {
+                        method: 'GET',
+                        credentials: 'include',
+                        headers: {
+                            refresh_token: refresh_token as string,
+                        },
                     })
-                    .catch(e => observer.error(e));
-            });
-        }
-    }))();
+                        .then(res => res.json())
+                        .then(res => {
+                            setToken('access_token', res.access_token).then(() => {
+                                console.log('access_token refetched because it was invalid');
+                                operation.setContext(({ headers = {} }: any) => ({
+                                    headers: {
+                                        ...headers,
+                                        access_token: res.access_token,
+                                    },
+                                }));
+                                const subscriber = {
+                                    next: observer.next.bind(observer),
+                                    error: observer.error.bind(observer),
+                                    complete: observer.complete.bind(observer),
+                                };
+                                forward(operation).subscribe(subscriber);
+                            });
+                        })
+                        .catch(e => observer.error(e));
+                })
+                .catch(e => observer.error(e));
+        });
+    }
+});
 
 export default new ApolloClient({
     link: ApolloLink.from([

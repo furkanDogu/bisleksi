@@ -15,8 +15,8 @@ export default ScaledSheet.create({
         borderRadius: 20,
         padding: '10@ms',
     },
-    emoji: { fontSize: '60@ms', marginTop: '5@ms0.5', marginBottom: '10@ms' },
-    text: { color: 'white', fontSize: '20@ms0.3', textAlign: 'center' },
+    emoji: { fontSize: '60@ms', marginTop: '6@ms0.5', marginBottom: '10@ms' },
+    text: { color: 'white', fontSize: '20@ms0.3', textAlign: 'center', marginTop: '5@ms' },
     roundButtonView: { position: 'absolute', bottom: 10 },
     roundButtonText: { color: COLORS.ORANGE, fontSize: '20@ms0.3' },
 });

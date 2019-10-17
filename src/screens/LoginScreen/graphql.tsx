@@ -19,7 +19,7 @@ interface ILoginScreenGQLProps {
 }
 
 const LoginScreenGQL = ({ navigation }: ILoginScreenGQLProps) => {
-    const [login, { error, data, loading }] = useMutation(MUTATION_LOGIN);
+    const [login] = useMutation(MUTATION_LOGIN);
 
     return (
         <LoginScreen

@@ -1,4 +1,4 @@
-import { AsyncStorage } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import jwt_decode from 'jwt-decode';
 import { TTokenPayload } from 'types/auth';
 
