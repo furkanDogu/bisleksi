@@ -7,4 +7,5 @@ export default StyleSheet.create({
         resizeMode: 'contain',
     },
     imageContainer: { height: 50, backgroundColor: 'white' },
+    lottieAnimation: { width: 220, height: 220, margin: 0 },
 });

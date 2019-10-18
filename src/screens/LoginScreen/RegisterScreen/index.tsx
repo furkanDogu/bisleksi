@@ -32,7 +32,7 @@ const RegisterScreen: React.SFC<IRegisterScreenProps> = ({
     register,
     navigation,
 }) => {
-    const { container, image, imageContainer, innerContainer, text, input } = style;
+    const { container, image, imageContainer, innerContainer, text, input, formContainer } = style;
     let scrollViewRef: any;
     const notification = useContext(NotificationContext);
 
@@ -63,20 +63,13 @@ const RegisterScreen: React.SFC<IRegisterScreenProps> = ({
                         scrollViewRef = ref;
                     }
                 }}>
-                <View style={{ flex: 1 }}>
+                <View style={container}>
                     <View style={imageContainer}>
                         <Image
                             style={image}
                             source={require('../../../images/Bisleksi-Logo.png')}></Image>
                     </View>
-                    <View
-                        style={{
-                            flex: 1,
-                            borderTopRightRadius: 15,
-                            borderTopLeftRadius: 15,
-                            backgroundColor: colors.ORANGE,
-                            paddingTop: 20,
-                        }}>
+                    <View style={formContainer}>
                         <Formik
                             initialValues={{
                                 name: '',

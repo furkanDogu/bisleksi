@@ -5,13 +5,16 @@ import NotificationProvider from '@components/Notification';
 import Router from './Router';
 
 import apolloClient from './config/apolloConfig';
+import UserInfoProvider from '@components/UserInfo';
 
 export default () => {
     return (
         <ApolloProvider client={apolloClient}>
-            <NotificationProvider>
-                <Router />
-            </NotificationProvider>
+            <UserInfoProvider>
+                <NotificationProvider>
+                    <Router />
+                </NotificationProvider>
+            </UserInfoProvider>
         </ApolloProvider>
     );
 };

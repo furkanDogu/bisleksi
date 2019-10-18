@@ -29,15 +29,12 @@ export default ({ login, navigation }: ILoginScreenProps) => {
         imageContainer,
         registerButtonText,
         loginButtonText,
-        buttonOn,
-        buttonOff,
+        flexOne,
     } = styles;
     const notification = useContext(NotificationContext);
 
-    const registerButtonOpacity = () => (isRegisterVisible ? buttonOff : buttonOn);
-
     return (
-        <View style={{ flex: 1 }}>
+        <View style={flexOne}>
             <Formik
                 initialValues={{
                     email: '',
@@ -118,7 +115,7 @@ export default ({ login, navigation }: ILoginScreenProps) => {
                 bgColor={COLORS.ORANGE}
                 label="Kayıt Ol"
                 textStyle={registerButtonText}
-                viewStyle={[registerButton, registerButtonOpacity()]}
+                viewStyle={[registerButton]}
                 onPress={() => setRegisterVisible(true)}
             />
             <RegisterScreenGQL

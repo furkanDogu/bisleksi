@@ -6,6 +6,12 @@ export const QUERY_USER = gql`
         user(userId: $userId) {
             _id
             name
+            surname
+            email
+            gameInfo {
+                gameId
+                scores
+            }
         }
     }
 `;
