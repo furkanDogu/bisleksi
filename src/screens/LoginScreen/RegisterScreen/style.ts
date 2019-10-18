@@ -36,4 +36,10 @@ export default ScaledSheet.create({
         paddingLeft: 10,
         color: 'black',
     },
+    formContainer: {
+        flex: 1,
+        borderTopRightRadius: 15,
+        borderTopLeftRadius: 15,
+        paddingTop: 20,
+    },
 });

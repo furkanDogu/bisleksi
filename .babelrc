@@ -14,7 +14,7 @@
                     ".ios.js",
                     ".ios.tsx"
                 ],
-                "root": ["'./src'"],
+                "root": ["./src"],
                 "alias": {
                     "@components": "./src/components",
                     "@config": "./src/config",
@@ -22,7 +22,8 @@
                     "@screens": "./src/screens",
                     "@utils": "./src/utils",
                     "@assets": "./src/assets",
-                    "@types": "./src/types"
+                    "@appTypes": "./src/types",
+                    "@games": "./src/games"
                 }
             }
         ]

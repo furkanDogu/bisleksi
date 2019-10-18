@@ -9,7 +9,8 @@
             "@config/*": ["config/*"],
             "@utils/*": ["utils/*"],
             "@assets/*": ["assets/*"],
-            "@types/*": ["types/*"]
+            "@appTypes/*": ["types/*"],
+            "@games/*": ["games/*"]
         },
         "allowJs": true,
         "allowSyntheticDefaultImports": true,

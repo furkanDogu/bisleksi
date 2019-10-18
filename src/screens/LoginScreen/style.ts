@@ -3,6 +3,7 @@ import { ScaledSheet } from 'react-native-size-matters';
 import colors from '@assets/colors';
 
 export default ScaledSheet.create({
+    flexOne: { flex: 1 },
     container: {
         backgroundColor: 'white',
         flex: 1,
@@ -28,6 +29,4 @@ export default ScaledSheet.create({
     imageContainer: { width: '255@ms', height: '67@ms', marginBottom: '20@ms' },
     loginButtonText: { color: 'white', fontSize: '18@ms0.3' },
     registerButtonText: { color: 'white', fontSize: '18@ms0.3' },
-    buttonOn: { backgroundColor: colors.ORANGE },
-    buttonOff: { backgroundColor: 'white' },
 });

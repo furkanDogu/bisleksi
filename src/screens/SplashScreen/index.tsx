@@ -1,14 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { View, Image, Text } from 'react-native';
 import LottieView from 'lottie-react-native';
 import { withApollo, WithApolloClient } from '@apollo/react-hoc';
 import { ApolloQueryResult } from 'apollo-client';
 import { NavigationStackProp } from 'react-navigation-stack';
 
+import UserInfoProvider, { UserInfoContext } from '@components/UserInfo';
+
 import style from './style';
 import { QUERY_USER } from './graphql';
 import { getToken, decodeToken } from '@services/authService';
 import netInfo from '@utils/netInfo';
+import { TUser } from '@appTypes/user';
 
 interface ISplashScreenProps {
     navigation: NavigationStackProp;
@@ -17,6 +20,9 @@ type TProps = WithApolloClient<ISplashScreenProps>;
 
 const SplashScreen: React.SFC<TProps> = ({ client, navigation }) => {
     const [isNetOn, setNetOn] = useState(true);
+    const { container, imageContainer, lottieAnimation, image } = style;
+    const { user, setUser } = useContext(UserInfoContext);
+
     const fetchNetInfo = async () => {
         const net = await netInfo();
         setNetOn(net);
@@ -31,31 +37,34 @@ const SplashScreen: React.SFC<TProps> = ({ client, navigation }) => {
                     query: QUERY_USER,
                     variables: { userId },
                 });
+                setUser(res.data.user as TUser);
                 setTimeout(() => navigation.navigate('Tab'), 1000);
             } catch (e) {
                 setTimeout(() => navigation.navigate('Login'), 1000);
             }
         }
     };
+
     useEffect(() => {
         fetchUserInfo();
     }, []);
+
     return (
-        <View style={style.container}>
+        <View style={container}>
             {isNetOn ? (
-                <View style={style.container}>
+                <View style={container}>
                     <View>
                         <LottieView
                             speed={1}
                             source={require('../../assets/loadingAnimation.json')}
                             autoPlay
-                            style={{ width: 220, height: 220, margin: 0 }}
+                            style={lottieAnimation}
                             loop
                         />
                     </View>
-                    <View style={style.imageContainer}>
+                    <View style={imageContainer}>
                         <Image
-                            style={style.image}
+                            style={image}
                             source={require('../../images/Bisleksi-Logo.png')}></Image>
                     </View>
                 </View>
