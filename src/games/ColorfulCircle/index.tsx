@@ -36,7 +36,7 @@ const ColorfulCircle: React.FC<IColorfulCircleProps> = ({
 }) => {
     const { user, setUser } = useContext(UserInfoContext);
     const { footerView, footerText, contentContainerStyle, listHeaderComponentStyle } = style;
-    const { circleCount, questionTimeLimit, showCaseTimeLimit } = definitions[level];
+    const { circleCount, questionTimeLimit, showCaseTimeLimit, turn } = definitions[level];
     const [timeForQuestion, startTimerForQuestion, stopTimerForQuestion] = useCountdown(
         questionTimeLimit,
     );
@@ -67,7 +67,7 @@ const ColorfulCircle: React.FC<IColorfulCircleProps> = ({
             if (user) {
                 dispatch({ type: 'setDuration', payload: TimeDiffCalc.getDiffInSeconds() });
                 try {
-                    const { data, errors } = await client.mutate({
+                    const { data } = await client.mutate({
                         mutation: MUTATION_CREATE_ANALYSIS,
                         variables: {
                             data: {
@@ -132,9 +132,10 @@ const ColorfulCircle: React.FC<IColorfulCircleProps> = ({
             startTimerForQuestion();
         }
     }, [startTimerForQuestion, isMidModalVisible]);
-
+    console.log(turn);
     const renderCircle = ({ item, index }: { item: any[]; index: number }) => (
         <Pie
+            turn={turn}
             size={deviceWidth / 3.3}
             colors={item}
             key={index}
@@ -147,7 +148,7 @@ const ColorfulCircle: React.FC<IColorfulCircleProps> = ({
     );
 
     const wantedPie = useCallback(
-        () => <Pie size={deviceWidth / 2.5} colors={answer[0]} isClickable={false} />,
+        () => <Pie size={deviceWidth / 2.5} colors={answer[0]} isClickable={false} turn={turn} />,
         [answer],
     );
 
