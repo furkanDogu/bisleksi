@@ -1,6 +1,13 @@
-import ColorfulCircle from '@games/ColorfulCircle';
+import { NavigationStackProp } from 'react-navigation-stack';
 
-const gameDefinitions: { [key in string]: React.FunctionComponent<{ level: number }> } = {
+import ColorfulCircle from '@games/ColorfulCircle';
+import { WithApolloClient } from '@apollo/react-hoc';
+
+const gameDefinitions: {
+    [key in string]: React.FunctionComponent<
+        WithApolloClient<{ level: number; navigation: NavigationStackProp }>
+    >;
+} = {
     ColorfulCircle,
 };
 

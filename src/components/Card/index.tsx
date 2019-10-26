@@ -20,7 +20,14 @@ interface ICardProps {
     onPress?: (event: GestureResponderEvent) => void;
 }
 
-const Card: React.FC<ICardProps> = ({ bgColor, imagePath, text, viewStyle, onPress, children }) => {
+const Card: React.SFC<ICardProps> = ({
+    bgColor,
+    imagePath,
+    text,
+    viewStyle,
+    onPress,
+    children,
+}) => {
     const { container, textStyle } = style;
     const content = (
         <View style={[container, { backgroundColor: bgColor }, viewStyle]}>
@@ -40,4 +47,11 @@ const Card: React.FC<ICardProps> = ({ bgColor, imagePath, text, viewStyle, onPre
         </>
     );
 };
+
+//@ts-ignore
+Card.whyDidYouRender = {
+    logOnDifferentValues: true,
+    trackHooks: true,
+};
+
 export default Card;

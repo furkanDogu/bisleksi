@@ -10,7 +10,8 @@
             "@utils/*": ["utils/*"],
             "@assets/*": ["assets/*"],
             "@appTypes/*": ["types/*"],
-            "@games/*": ["games/*"]
+            "@games/*": ["games/*"],
+            "@hooks/*": ["hooks/index.ts"]
         },
         "allowJs": true,
         "allowSyntheticDefaultImports": true,

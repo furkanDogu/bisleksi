@@ -35,4 +35,10 @@ const CircleLabel: React.FC<ICircleLabelProps> = ({
     );
 };
 
+//@ts-ignore
+CircleLabel.whyDidYouRender = {
+    logOnDifferentValues: true,
+    trackHooks: true,
+};
+
 export default CircleLabel;

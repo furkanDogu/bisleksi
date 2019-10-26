@@ -53,4 +53,10 @@ const NotificationProvider: React.FC = ({ children }) => {
     );
 };
 
+//@ts-ignore
+NotificationProvider.whyDidYouRender = {
+    logOnDifferentValues: true,
+    trackHooks: true,
+};
+
 export default NotificationProvider;

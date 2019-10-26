@@ -96,7 +96,7 @@ const RegisterScreen: React.SFC<IRegisterScreenProps> = ({
                                             'refresh_token',
                                             data.register.refresh_token,
                                         );
-                                        navigation.navigate('Tab');
+                                        navigation.navigate('Splash');
                                     } else {
                                         notification.openNotification([
                                             'Lütfen internet bağlantınızı kontrol ediniz',
@@ -247,6 +247,12 @@ const RegisterScreen: React.SFC<IRegisterScreenProps> = ({
             </KeyboardAwareScrollView>
         </Modal>
     );
+};
+
+//@ts-ignore
+RegisterScreen.whyDidYouRender = {
+    logOnDifferentValues: true,
+    trackHooks: true,
 };
 
 export default RegisterScreen;
