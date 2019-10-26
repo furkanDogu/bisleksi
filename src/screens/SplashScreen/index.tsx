@@ -18,7 +18,7 @@ interface ISplashScreenProps {
 }
 type TProps = WithApolloClient<ISplashScreenProps>;
 
-const SplashScreen: React.SFC<TProps> = ({ client, navigation }) => {
+const SplashScreen = React.memo<TProps>(({ client, navigation }) => {
     const [isNetOn, setNetOn] = useState(true);
     const { container, imageContainer, lottieAnimation, image } = style;
     const { user, setUser } = useContext(UserInfoContext);
@@ -28,6 +28,7 @@ const SplashScreen: React.SFC<TProps> = ({ client, navigation }) => {
         setNetOn(net);
         return net;
     };
+
     const fetchUserInfo = async () => {
         if (await fetchNetInfo()) {
             let res: ApolloQueryResult<any>;
@@ -38,9 +39,9 @@ const SplashScreen: React.SFC<TProps> = ({ client, navigation }) => {
                     variables: { userId },
                 });
                 setUser(res.data.user as TUser);
-                setTimeout(() => navigation.navigate('Tab'), 1000);
+                setTimeout(() => navigation.navigate('Tab'), 0);
             } catch (e) {
-                setTimeout(() => navigation.navigate('Login'), 1000);
+                setTimeout(() => navigation.navigate('Login'), 0);
             }
         }
     };
@@ -73,11 +74,18 @@ const SplashScreen: React.SFC<TProps> = ({ client, navigation }) => {
             )}
         </View>
     );
-};
+});
 
 //@ts-ignore
 SplashScreen.navigationOptions = {
     header: null,
+};
+
+//@ts-ignore
+SplashScreen.whyDidYouRender = {
+    logOnDifferentValues: true,
+    trackHooks: true,
+    customName: 'SplashScreen',
 };
 
 export default withApollo<ISplashScreenProps>(SplashScreen);

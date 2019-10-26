@@ -22,7 +22,7 @@ interface ILabeledInputProps {
     customInput?: React.FunctionComponent;
 }
 
-export default ({
+const LabeledInput = ({
     height,
     bgColor,
     textColor,
@@ -61,3 +61,11 @@ export default ({
         </View>
     );
 };
+
+//@ts-ignore
+LabeledInput.whyDidYouRender = {
+    logOnDifferentValues: true,
+    trackHooks: true,
+};
+
+export default LabeledInput;

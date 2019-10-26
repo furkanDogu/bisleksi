@@ -23,7 +23,8 @@
                     "@utils": "./src/utils",
                     "@assets": "./src/assets",
                     "@appTypes": "./src/types",
-                    "@games": "./src/games"
+                    "@games": "./src/games",
+                    "@hooks": "./src/hooks"
                 }
             }
         ]

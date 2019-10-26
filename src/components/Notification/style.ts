@@ -1,15 +1,14 @@
-import { Dimensions } from 'react-native';
 import { ScaledSheet } from 'react-native-size-matters';
 
+import { deviceWidth, deviceHeight } from '@assets/Dimensions';
 import COLORS from '@assets/colors';
 
-const { height, width } = Dimensions.get('window');
 export default ScaledSheet.create({
     flexOne: { flex: 1 },
     container: { justifyContent: 'center', alignItems: 'center' },
     innerContainer: {
-        height: height * 0.35,
-        width: width * 0.75,
+        height: deviceHeight * 0.35,
+        width: deviceWidth * 0.75,
         backgroundColor: COLORS.ORANGE,
         alignItems: 'center',
         borderRadius: 20,

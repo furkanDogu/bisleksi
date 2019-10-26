@@ -20,7 +20,7 @@ interface ILoginScreenProps {
     navigation: NavigationStackProp;
 }
 
-export default ({ login, navigation }: ILoginScreenProps) => {
+const LoginScreen: React.FC<ILoginScreenProps> = ({ login, navigation }) => {
     const [isRegisterVisible, setRegisterVisible] = useState(false);
     const {
         container,
@@ -48,7 +48,7 @@ export default ({ login, navigation }: ILoginScreenProps) => {
                             const { data } = await login(values);
                             await setToken('access_token', data.login.access_token);
                             await setToken('refresh_token', data.login.refresh_token);
-                            await navigation.navigate('Tab');
+                            await navigation.navigate('Splash');
                         } else {
                             notification.openNotification([
                                 'Lütfen internet bağlantınızı kontrol ediniz',
@@ -128,3 +128,11 @@ export default ({ login, navigation }: ILoginScreenProps) => {
         </View>
     );
 };
+
+//@ts-ignore
+LoginScreen.whyDidYouRender = {
+    logOnDifferentValues: true,
+    trackHooks: true,
+};
+
+export default LoginScreen;

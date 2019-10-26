@@ -25,7 +25,7 @@ type TRoundButtonProps = {
     onPressAsync?: () => Promise<any>;
 };
 
-export default ({
+const RoundButton = ({
     bgColor,
     label,
     textStyle,
@@ -58,3 +58,11 @@ export default ({
         </TouchableOpacity>
     );
 };
+
+//@ts-ignore
+RoundButton.whyDidYouRender = {
+    logOnDifferentValues: true,
+    trackHooks: true,
+};
+
+export default React.memo(RoundButton);
