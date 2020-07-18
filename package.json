@@ -32,7 +32,7 @@
         "formik": "^1.5.8",
         "graphql": "^14.5.8",
         "jwt-decode": "^2.2.0",
-        "lodash": "^4.17.15",
+        "lodash": "^4.17.19",
         "lottie-react-native": "^3.2.1",
         "moment": "^2.24.0",
         "react": "16.9.0",
